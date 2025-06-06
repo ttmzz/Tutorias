@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia Sass no VS Code</title>
+  <link rel="stylesheet" href="../css/main.css">
+
+</head>
+<body>
+  <h1>Guia do Sass</h1>
+
+  <div class="etapa">
+    <h2>1️⃣ Formato no VS Code</h2>
+    <p>Quando organizamos o projeto usando as pastas <code>source</code> e <code>build</code> (ou <code>src</code> e <code>dist</code>), temos benefícios importantes:</p>
+    <ul>
+      <li><strong>source/</strong> – onde você escreve e mantém seu código-fonte (ex: arquivos <code>.scss</code>).</li>
+      <li><strong>build/</strong> – onde ficam os arquivos compilados e prontos para uso no navegador (ex: <code>.css</code>, <code>.css.map</code>).</li>
+      <li><strong>Organização</strong> – separar código fonte do código gerado deixa o projeto mais limpo e fácil de manter.</li>
+      <li><strong>Deploy</strong> – na hora de enviar para produção, você só precisa enviar o conteúdo da pasta <code>build/</code>.</li>
+      <li><strong>Automação</strong> – facilita integrar com ferramentas que gerenciam arquivos, como Webpack, Gulp, etc.</li>
+    </ul>
+  </div>
+
+  <div class="etapa">
+    <h2>2️⃣ Iniciar um projeto com Node.js</h2>
+    <p>Abra o terminal e execute:</p>
+    <code>npm init -y</code>
+    <p>Isso cria o arquivo <strong>package.json</strong> com as configurações do seu projeto.</p>
+  </div>
+
+  <div class="etapa">
+    <h2>3️⃣ Instalar o Sass localmente</h2>
+    <p>No terminal, dentro do seu projeto, execute:</p>
+    <code>npm install sass --save-dev</code>
+    <p>Isso instala o Sass só neste projeto e adiciona ao <code>package.json</code>.</p>
+  </div>
+
+  <div class="etapa">
+    <h2>4️⃣ Comando de Entrada e Saída</h2>
+    <pre><code>npm run sass -- scss/style.scss css/style.css</code></pre>
+    <ul>
+      <li><strong>scss/style.scss</strong> = arquivo de <span style="color:#4fd1c5;">entrada</span> (você edita)</li>
+      <li><strong>css/style.css</strong> = arquivo de <span style="color:#4fd1c5;">saída</span> (o Sass gera)</li>
+    </ul>
+    <p>Você escreve em SCSS e o Sass transforma tudo em CSS automaticamente com esse comando!</p>
+  </div>
+
+  <div class="etapa">
+    <h2>5️⃣ Compilar o Sass para CSS</h2>
+    <p>Edite o arquivo <code>package.json</code> e adicione esses scripts:</p>
+    <pre><code>"scripts": {
+    "sass": "sass source/main.scss build/main.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  
+}</code></pre>
+
+    <p>Agora use esses comandos no terminal:</p>
+    <ul>
+      <li><code>npm run sass</code> – Compila o SCSS uma vez</li>
+      <li><code>npm run sass:watch</code> – Compila sempre que você salvar</li>
+    </ul>
+
+    <p>Quando você rodar um desses comandos, o arquivo <code>scss/style.scss</code> será transformado em <code>css/style.css</code> e <code>css/style.css.map</code>.</p>
+  </div>
+
+  <div class="etapa">
+    <h2>🎨 Exemplo de SCSS usado:</h2>
+    <pre><code>$cor-fundo: #1e1e1e;
+$cor-texto: #f0f0f0;
+
+body {
+  background-color: $cor-fundo;
+  color: $cor-texto;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}</code></pre>
+  </div>
+
+</body>
+</html>
