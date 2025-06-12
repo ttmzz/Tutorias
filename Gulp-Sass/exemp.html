@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizador de Código</title>
+    
+    <!-- Tema claro (prism) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.css" rel="stylesheet" />
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 2rem;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        pre {
+            background-color: #2d2d2d;
+            border-radius: 8px;
+            overflow-x: auto;
+            padding: 1rem;
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95rem;
+        }
+
+        h1 {
+            text-align: center;
+            font-weight: 800;
+            font-style: italic;
+            color: #222;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Código Gulp + Sass</h1>
+        <pre><code class="language-javascript">
+// Importa os pacotes
+const gulp = require('gulp');
+const sass = require('gulp-sass')(require('sass'));
+const sourcemaps = require('gulp-sourcemaps');
+const cleanCSS = require('gulp-clean-css');
+
+
+// Função para compilar o Sass
+function compilaSass() {
+    return gulp.src('./source/styles/main.scss')
+    .pipe(sourcemaps.init())
+    .pipe(sass().on('error', sass.logError))
+    .pipe(cleanCSS()) // Minifica o CSS gerado
+    .pipe(sourcemaps.write('./maps'))
+    .pipe(gulp.dest('./build/styles'));
+}
+
+
+// Tarefas exportadas
+exports.default = gulp.series(funcaoPadrao, dizOi);
+exports.dizOi = dizOi;
+exports.sass = compilaSass;
+exports.watch = function() {
+    gulp.watch('./source/styles/*.scss', { ignoreInitial: false}, gulp.series(compilaSass));
+}
+        </code></pre>
+    </div>
+
+    <!-- Prism.js para destaque de sintaxe -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+</body>
+</html>
