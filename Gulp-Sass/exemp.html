@@ -51,7 +51,25 @@ const gulp = require('gulp');
 const sass = require('gulp-sass')(require('sass'));
 const sourcemaps = require('gulp-sourcemaps');
 const cleanCSS = require('gulp-clean-css');
+const uglify = require('gulp-uglify');
+const obfuscate = require('gulp-obfuscate'); // faz com que proteja as informações no javascript
+const imagemin = require('gulp-imagemin');
 
+
+// Função para comprimir Imagens
+function comprimeImagens() {
+    return gulp.src('./source/imagens/*')
+    .pipe(imagemin())
+    .pipe(gulp.dest('./build/imagens'));
+}
+
+// Função para comprimir o JavaScript
+function comprimeJavascript() {
+    return gulp.src('./source/scripts/*.js')
+    .pipe(uglify())
+    .pipe(obfuscate())
+    .pipe(gulp.dest('./build/scripts'))
+}            
 
 // Função para compilar o Sass
 function compilaSass() {
@@ -65,12 +83,12 @@ function compilaSass() {
 
 
 // Tarefas exportadas
-exports.default = gulp.series(funcaoPadrao, dizOi);
-exports.dizOi = dizOi;
-exports.sass = compilaSass;
-exports.watch = function() {
+exports.default = function() {
     gulp.watch('./source/styles/*.scss', { ignoreInitial: false}, gulp.series(compilaSass));
+    gulp.watch('./source/scripts/*.js', { ignoreInitial: false}, gulp.series(comprimeJavascript));
+    gulp.watch('./source/imagens/*', { ignoreInitial: false}, gulp.series(comprimeImagens));
 }
+
 
 OBS: Para instalar e rodar o gulp-clean-css é preciso abrir o terminal e usar o comando ->  npm install gulp-clean-css --save-dev
         </code></pre>
