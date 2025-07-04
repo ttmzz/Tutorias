@@ -3,71 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Como criar um repositório e enviá-lo ao GitHub</title>
-    <link rel="stylesheet" href="./css/style.css">
-    <link rel="icon" href="../repository.ico">
+    <title>Visualizador de Código</title>
+    
+    <!-- Tema claro (prism) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.css" rel="stylesheet" />
+    
     <style>
-        .btn {
-            background: #34d9c3;
-            background-image: linear-gradient(to bottom, #34d9c3, #2b99b8);
-            border-radius: 20px;
-            border: 0;
-            font-family: Arial;
-            color: #ffffff;
-            font-size: 1.1rem;
-            padding: 10px 20px 10px 20px;
-            text-decoration: none;
-            cursor: pointer;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 2rem;
+            background-color: #f8f9fa;
+            color: #333;
         }
 
-        .btn:hover {
-        background: #36e09c;
-        background-image: linear-gradient(to bottom, #36e09c, #2fa1a1);
-        text-decoration: none;
+        .container {
+            max-width: 900px;
+            margin: auto;
         }
 
+        pre {
+            background-color: #2d2d2d;
+            border-radius: 8px;
+            overflow-x: auto;
+            padding: 1rem;
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95rem;
+        }
+
+        h1 {
+            text-align: center;
+            font-weight: 800;
+            font-style: italic;
+            color: #222;
+        }
     </style>
 </head>
-
 <body>
-    <header>
-        <h1>Instruções para o Git e GitHub</h1>
-    </header>
-    <div class="main">
-        <section>
-            <h2>Tutorial do SASS</h2>
-            <ul>
-                <a href="./SASS/tutorialSass.html" class="btn">Acessar</a>
-            </ul>
-        </section>
+    <div class="container">
+        <h1>Instalação do LESS</h1>
+        <h2>Caminhos para seguir pelo terminal</h2>
+        <pre><code class="language-javascript">
+less
+npm install -g less
+npm init
+npm install --save-dev less
+git init
+npm install -g less-watch-compiler
+npm install --save-dev less-watch-compiler
+npm run less
+no package.json -> scripst:
+"less": "lessc ./src/styles/main.less ./build/styles/main.css",
+"less": "less-watch-compiler ./src/styles ./build/styles/main.less",
+        </code></pre>
     </div>
 
-    <div class="main">
-        <section>
-            <h2>Tutorial do GULP</h2>
-            <ul>
-                <a href="./Gulp/tutorialGulp.html" class="btn">Acessar</a>
-            </ul>
-        </section>
-    </div>
-
-    <div class="main">
-        <section>
-            <h2>Tutorial do GULP com SASS</h2>
-            <ul>
-                <a href="./Gulp-Sass/exemp.html" class="btn">Acessar</a>
-            </ul>
-        </section>
-    </div>
-
-     <div class="main">
-        <section>
-            <h2>Tutorial do LESS</h2>
-            <ul>
-                <a href="./LESS/tutorialLess.html" class="btn">Acessar</a>
-            </ul>
-        </section>
-    </div>
-
+    <!-- Prism.js para destaque de sintaxe -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
 </body>
 </html>
