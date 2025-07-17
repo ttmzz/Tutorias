@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizador de Código</title>
+    
+    <!-- Tema claro (prism) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.css" rel="stylesheet" />
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 2rem;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        pre {
+            background-color: #2d2d2d;
+            border-radius: 8px;
+            overflow-x: auto;
+            padding: 1rem;
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95rem;
+        }
+
+        h1 {
+            text-align: center;
+            font-weight: 800;
+            font-style: italic;
+            color: #222;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Instalação do Grunt</h1>
+        <h2>Estrutura no arquivo de configuração</h2>
+        <pre><code class="language-javascript">
+const { option, task } = require("grunt");
+
+module.exports = function(grunt) {
+    grunt.initConfig({
+        pkg: grunt.file.readJSON('package.json'),
+        less: {
+            development: {
+                files: {
+                    'dev/styles/main.css': 'src/styles/main.less'
+                }
+            },
+            production: {
+                options: {
+                  compress: true, 
+                },
+                    files: {
+                        'dist/styles/main.min.css': 'src/styles/main.less'
+                    }
+            }
+        },
+        watch: {
+            less: {
+                files: ['src/styles/**/*.less'],
+                tasks: ['less:development']
+            },
+            html: {
+                files: ['src/index.html'],
+                tasks: ['replace:dev']
+            }
+        },
+        replace: {
+            dev: {
+                options: {
+                    patterns: [
+                        {
+                            match: 'ENDERECO_DO_CSS',
+                            replacement: './styles/main.css'
+                        },
+                        {
+                            match: 'ENDERECO_DO_JS',
+                            replacement: '../src/scripts/main.js'
+                        }
+                    ]
+                    },
+            
+                    files:[
+                        {
+                            expand: true,
+                            flatten: true,
+                            src: ['src/index.html'],
+                            dest: 'dev/'
+                        }
+                    ] 
+                },
+                dist: {
+                    options: {
+                        patterns: [
+                            {
+                                match: 'ENDERECO_DO_CSS',
+                                replacement: './styles/main.min.css'
+                            },
+                            {
+                            match: 'ENDERECO_DO_JS',
+                            replacement: './scripts/main.min.js'
+                           }
+                        ]
+                        },  
+                
+                        files:[
+                            {
+                                expand: true,
+                                flatten: true,
+                                src: ['prebuild/index.html'],
+                                dest: 'dist/'
+                            }
+                        ] 
+                    },
+               },
+                htmlmin: {
+                    dist: {
+                        options: {
+                            removeComments: true,
+                            collapseWhitespace: true
+                        },
+                        files: {
+                            'prebuild/index.html': 'src/index.html'
+                        }
+                    }
+                },
+                clean: ['prebuild'],
+                uglify: {
+                    target: {
+                        files: {
+                            'dist/scripts/main.min.js': 'src/scripts/main.js'
+                        }
+                    }
+                }
+            });
+
+    grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-replace');
+    grunt.loadNpmTasks('grunt-contrib-htmlmin');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+
+    grunt.registerTask('default', ['watch']);
+    grunt.registerTask('build', ['less:production', 'htmlmin:dist', 'replace:dist', 'clean', 'uglify']);
+ 
+}
+        </code></pre>
+    </div>
+
+    <!-- Prism.js para destaque de sintaxe -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+</body>
+</html>
