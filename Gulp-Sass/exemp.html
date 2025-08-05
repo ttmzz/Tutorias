@@ -52,10 +52,12 @@ const gulp = require('gulp');
 const sass = require('gulp-sass')(require('sass')); // instala as extensões do SASS e sinconiza com o Gulp. OBS: npm install --save-dev gulp gulp-sass sass
 const sourcemaps =  require('gulp-sourcemaps'); //  npm install --save-dev gulp-sourcemaps
 const cleanCSS = require('gulp-clean-css'); // npm install gulp-clean-css --save-dev
-// 2) Para o JavaScript
+// 2) Para o html
+const htmlmin = require('gulp-htmlmin'); // npm install --save-dev gulp-htmlmin
+// 3) Para o JavaScript
 const uglify  = require('gulp-uglify'); // npm install --save-dev gulp-uglify
 const obfuscate = require('gulp-obfuscate'); // npm install --save-dev gulp gulp-obfuscate
-// 3) Para imagens
+// 4) Para imagens
 const imagemin = require('gulp-imagemin'); // npm install --save-dev gulp gulp-imagemin
 
 
@@ -88,9 +90,20 @@ function compilaSass() {
 
 }
 
+// Minificar o HTML
+function compilaHtml() {
+  return gulp.src('src/*.html')
+    .pipe(htmlmin({
+      collapseWhitespace: true,
+      removeComments: true
+    }))
+    .pipe(gulp.dest('./build'));
+}
+
 // Tarefas exportadas
 exports.default = function() {
     gulp.watch('./source/styles/*.scss', {ignoreInitial: false}, gulp.series(compilaSass));
+    gulp.watch('./src/.html', {ignoreInitial: false}, gulp.series(compilaHtml));
     gulp.watch('./source/scripts/*.js', {ignoreInitial: false}, gulp.series(compilaJs));
     gulp.watch('./source/images/*', {ignoreInitial: false}, gulp.series(compilaImagens));
 }
